@@ -1,0 +1,308 @@
+
+<div class="wrapper">
+    <header class="main-header">
+        <div class="logo">
+            <a [routerLink]="[]"> <!-- Logo -->
+             
+                <span class="logo-large" >
+                    
+                    <!-- <img src="assets/images/MINI-LOGO-ICON-WHITE.png" alt="apvims"> APV IMS  -->                  
+        <!--------- dynamically changes data from db now -------------------->
+        
+                    <img [src]='companyLogo' alt="apvims"> {{companyName}}
+
+                </span>
+            </a>
+        </div>
+
+        <nav class="navbar navbar-top">
+            <a [routerLink]="[]" class="sidebar-toggle" (click)="SidebarToggle()"> 
+                <!-- Sidebar toggle button-->
+                <span class="sr-only">Toggle navigation</span>
+                <span class="fa fa-tasks"></span>
+            </a>
+            <!-- Links -->
+            <ul class="nav">
+                <li class="nav-item dropdown notifications-menu">
+                    <a class="nav-link" [routerLink]="[]"  data-toggle="dropdown">
+                        <i class="fa fa-bell"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="header"><i class="fa fa-bell"></i> <span class="badge badge-pill badge-warning">8</span> Notifications</li>
+                        <li>
+                            <ul class="menu">
+                                <li>
+                                <a [routerLink]="[]" class="border-gray"><i class="fa fa-inbox"></i> Inbox  <span class="badge  badge-warning pull-right">8</span></a>
+                                </li>
+                                <li>
+                                <a [routerLink]="[]" class="border-gray"><i class="fa fa-cart-plus"></i> New Order <span class="badge  badge-warning pull-right">3</span> </a>
+                                </li>
+                                
+                                <li>
+                                <a [routerLink]="[]" class="border-gray"><i class="fa fa-cart-plus"></i> Order Confirmation <span class="badge  badge-warning pull-right">4</span> </a>
+                                </li>
+                                
+                                <li>
+                                <a [routerLink]="[]" class="border-gray"><i class="fa fa-cart-plus"></i> shipment cancel 
+                                    <span class="badge  badge-warning pull-right">2</span> </a>
+                                </li>
+                            </ul>
+                        </li>
+                       <li class="footer">
+                            <a [routerLink]="[]"> See all Notifications <i class=" fa fa-arrow-right"></i></a>
+                        </li>
+                    </ul>
+                  </li>
+        
+          
+              <!-- Dropdown -->
+              <li class="nav-item dropdown notifications-menu">
+                <a class="nav-link" [routerLink]="[]"  data-toggle="dropdown">
+                    <img src="assets/images/avatar2.jpg" class="rounded-circle"  alt="User Image">
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="header text-center">
+                        <span><b>Welcome</b></span><br/>
+                       {{userName}}
+                    </li>
+                   <li class="footer">
+                        <a [routerLink]="[]" class="text-warning" (click)="logout()"> <i class="fa fa-sign-out" aria-hidden="true" ></i> <b>Logout</b> </a>
+                    </li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+  
+    </header>
+
+ 
+        <!-- Sidebar -->
+        <div class="main-sidebar">
+            <ul class="sidebar-menu">
+                <li class="active">
+                    <a [routerLink]="['user-dashboard']"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['assets']"><i class="fa fa-th-list" aria-hidden="true"></i><span>Assets</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="#BasicForms" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-file-text"></i><span>Master Data Forms</span>
+                   <span class="pull-right-container">
+                 
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="BasicForms" >
+                        <li><a [routerLink]="['category']">Category</a></li>
+                        <li><a [routerLink]="['product']">Product</a></li>
+                        <li><a [routerLink]="['group']">Group/Department</a></li>
+                        <li><a [routerLink]="['designation']">Designation</a></li>
+                        <li><a [routerLink]="['user-privilege']">User Privilege</a></li>
+                        <li><a [routerLink]="['location']">Location</a></li>
+                       
+                    </ul>
+                </li>
+
+
+                <li class="treeview">
+                    <a href="#user" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-user"></i><span>User</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="user" >
+                        <li><a [routerLink]="['add-user']">Add User</a></li>
+                        <li><a [routerLink]="['user-list']">User's List</a></li>
+                   
+                       
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#Vendor" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-user-circle-o"></i><span>Vendor</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Vendor" >
+                        <li><a [routerLink]="['add-vendor']">Add Vendor</a></li>
+                        <li><a [routerLink]="['vendor-list']">Vendor's List</a></li>
+                        <!-- <li><a [routerLink]="['update-vendor']">Update Vendor</a></li> -->
+                   
+                       
+                    </ul>
+                </li>
+
+                <li class="treeview" *ngIf="userRole !== '26' ">
+                    <a href="#Request" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-question"></i><span>Request</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Request" >
+                        <li><a [routerLink]="['genarate-request']">Genarate Request</a></li>
+                        <li><a [routerLink]="['accepted-request']">Accepted Request</a></li>
+                        <li><a [routerLink]="['pending-request']">Pending Request</a></li>
+                        <li><a [routerLink]="['rejected-request']">Rejected Request</a></li>
+                    </ul>
+                </li>
+
+                <li  class="treeview" *ngIf="userRole == '26' ">
+                    <a href="#Request" data-toggle="collapse" aria-expanded="false"> 
+                   
+                        <i class="fa fa-check"></i><span>Request</span>
+                        <span class="pull-right-container">
+                         <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                     </a>
+                     <ul class="collapse treeview-menu" id="Request" >
+                        <li><a [routerLink]="['received-request']">Pending Request</a></li>
+                        <li><a [routerLink]="['accepted-request']">Accepted Request</a></li>
+                        <li><a [routerLink]="['rejected-request']">Rejected Request</a></li>
+                    </ul>
+                    <!-- <a [routerLink]="['received-request']"><i class="fa fa-check" aria-hidden="true"></i>Requests<span>
+                        
+                    </span>
+                    </a> -->
+                </li>
+
+                
+
+                <li class="treeview">
+                    <a href="#Purchase" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-list-alt"></i><span>Purchase</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Purchase" >
+                        <li *ngIf="userRole !== '26' "><a [routerLink]="['make-purchase-order']">Make Purchase Order</a></li>
+                        <li><a [routerLink]="['purchase-order-list']">Purchase Order List</a></li>
+                        <li ><a [routerLink]="['received-purhchase-order']"  *ngIf="userRole == '26'">Received Purchase Orders</a></li>
+                       
+                    </ul>
+                </li>
+
+              
+             
+
+                
+                <li class="treeview">
+                    <a href="#Inspection" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-search"></i><span>Inspection</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Inspection" >
+                        <li><a [routerLink]="['upload-invoice']">Upload Invoice</a></li>
+                        <li><a [routerLink]="['upload-inspection-form']">Upload Inspection Form</a></li>
+                   
+                       
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#Inventory " data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-pencil-square-o"></i><span>Inventory </span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Inventory" >
+                        <li><a [routerLink]="['update-items']">Update Items</a></li>
+                        <li><a [routerLink]="['upload-scan-document']">Upload Scan Document</a></li>
+                        <li><a [routerLink]="['upload-scan-quotation']">Upload Scan Quotation</a></li>
+                        <li><a [routerLink]="['incoming-item-details']">Incoming Item Details</a></li>
+                    </ul>
+                </li>
+
+                <li *ngIf="userRole === '29' || userRole === '26' ">
+                    <a [routerLink]="['transfer-stock']"><i class="fa fa-exchange" aria-hidden="true"></i><span>Transfer Stock</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="#Reports" data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-files-o"></i><span>Reports</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="Reports" >
+                        <li><a [routerLink]="['report-active-supplier']">Active Vendors</a></li>
+                        <li><a [routerLink]="['report-purchase-order']">Purchase Order</a></li>
+                        <li><a [routerLink]="['report-vendor-evaluation']">Vendor Evaluation</a></li>
+                        <li><a [routerLink]="['report-upload-documents']">Upload Documents</a></li>                      
+                        <li><a [routerLink]="['report-items-list']">Items</a></li>                      
+                        <li><a [routerLink]="['report-item-with-price']">Items with Price</a></li>                      
+                        <li><a [routerLink]="['report-pending-stock']">Pending Stocks</a></li>                      
+                        <li><a [routerLink]="['report-stock-in-hand']">Stock in Hand</a></li>                      
+                        <li><a [routerLink]="['report-complete-asset']">Complete Asset</a></li>                      
+                    </ul>
+                </li>
+
+                <li>
+                    <a [routerLink]="['company-registration']"><i class="fa fa-registered" aria-hidden="true"></i><span>Company Registration</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a [routerLink]="['edit-profile']"><i class="fa fa-registered" aria-hidden="true"></i><span>Edit Profile</span>
+                    </a>
+                </li>
+
+                <li>
+                    <!-- <a [routerLink]="['moveto-itsm']"><i class="fa fa-arrows" aria-hidden="true"></i><span>Move To ITSM</span> -->
+                        <a href="http://192.168.0.201/itsm/Login.aspx" target="_blank"><i class="fa fa-arrows" aria-hidden="true"></i><span>Move To ITSM</span>
+                    </a>
+                </li>
+
+                <li class="treeview">
+                    <a href="#SystemInfo " data-toggle="collapse" aria-expanded="false"> 
+                   
+                   <i class="fa fa-info-circle"></i><span>System Information</span>
+                   <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                   </span>
+                </a>
+                    <ul class="collapse treeview-menu" id="SystemInfo" >
+                        <!-- <li><a [routerLink]="['newsystem-information']">New System Inforamation</a></li> -->
+                        <li><a [routerLink]="['system-information-list']">System Information List</a></li>               
+                    </ul>
+                </li>
+
+
+                </ul>
+        
+        </div>
+    
+        <!-- Page Content -->
+        <div class="content-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    
+     
+</div>
+   
+ 
+
+
+
+
