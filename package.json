@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build --prod && uglifyjs dist/my-app/main.js -c -m -o dist/my-app/main.js",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "type":"mdoule"
   },
   "private": true,
   "dependencies": {
