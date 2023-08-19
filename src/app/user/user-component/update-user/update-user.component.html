@@ -1,0 +1,112 @@
+<app-preloader [showpreLoader]="isLoading"></app-preloader>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Update User</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="col-md-6 offset-md-2 " [formGroup]="updateUserForm">
+                <div class="data-form" >
+                    <h1 class="text-center form-heading">Update User</h1>
+
+                    <div class="form-group  m-2" >
+                        <label for="inputEmail4" class="form-label"><sup>*</sup>User's Name:</label>
+                        <input type="text" class="form-control data-control" placeholder="Enter User's Name " formControlName="user_name" [(ngModel)]="userData.user_name"/>
+
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updateUserForm.get('user_name').hasError('required') && updateUserForm.get('user_name').touched">
+                        User Name is Required.</div>
+  
+                 
+  
+
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="inputEmail4" class="form-label"><sup>*</sup>Email:</label>
+                        <input type="email" class="form-control data-control" placeholder="Enter Email " formControlName="user_email" [(ngModel)]="userData.user_email"/>
+
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updateUserForm.get('user_email').hasError('required') && updateUserForm.get('user_email').touched">
+                        User Email is Required.</div>
+  
+                      <div class="mandatory mandatory my-1 text-danger"
+                        *ngIf="updateUserForm.get('user_email').hasError('pattern') && updateUserForm.get('user_email').touched">
+                        Email Address is not valid.</div>
+                    </div>
+
+                    <div class="form-group  m-2" >
+                        <label for="password" class="form-label"><sup>*</sup>Password:</label>
+                        <input type="password" class="form-control data-control" placeholder="Enter Password " formControlName="user_password" [(ngModel)]="userData.user_password"/>
+
+                        <div class="mandatory my-1 text-danger"
+                        *ngIf="updateUserForm.get('user_password').hasError('required') && updateUserForm.get('user_password').touched">
+                        Password is Required.</div>
+  
+                 
+  
+
+                    </div>
+                   
+              
+                    <div class="form-group m-2">
+                        <label for="rating" class="form-label"> <sup>*</sup>User Type</label>
+                        <select class="w-100 p-2 border rounded" #privilege  formControlName="privilege_id" [(ngModel)]="userData.privilege_id" (change)="privilegeId(privilege.value)">
+    
+                            <option [selected]=true disabled hidden value=0>Select</option>
+
+    
+                          <option *ngFor="let items of privilegeData" [value]='items.privilege_id'>{{items.privilege_name}}
+                        </option>
+                          
+                        </select>
+
+                        <div class="mandatory my-1 text-danger"
+                      *ngIf="updateUserForm.get('privilege_id').hasError('required') && updateUserForm.get('privilege_id').touched">
+                      User Type is Required. </div>
+    
+                        
+                      </div>
+                    
+                
+                   
+
+                <div class="form-group m-2">
+                    <label for="category" class="form-label"> <sup>*</sup>Group Name</label>
+                    <select class="w-100 p-2 border rounded"  formControlName="grp_id" #group (change)="grpId(group.value)" [(ngModel)]="userData.grp_id">
+
+                      <option [selected]=true disabled hidden value=0>Select</option>
+                      <option *ngFor=" let items of groupData" [value]='items.grp_id'>{{items.grp_name}}</option>
+
+                      <div class="mandatory my-1 text-danger"
+                      *ngIf="updateUserForm.get('grp_id').hasError('required') && updateUserForm.get('grp_id').touched">
+                      Group is Required.</div>
+                    </select>
+                    </div>
+                    <div class="form-group m-2">
+                        <label for="category" class="form-label"> <sup>*</sup>Designation</label>
+                        <select class="w-100 p-2 border rounded" #design formControlName="designation_id"  (change)="designId(design.value)" [(ngModel)]="userData.designation_id">
+    
+                          <option [selected]=true disabled hidden value=0>Select</option>
+    
+                          <option *ngFor=" let items of designationData" [value]='items.designation_id'>
+                            {{items.designation_name}}</option>
+                        </select>
+
+                        <div class="mandatory my-1 text-danger"
+                      *ngIf="updateUserForm.get('designation_id').hasError('required') && updateUserForm.get('designation_id').touched">
+                      Designation is Required.</div>
+                        </div>
+
+                <div class="data-form-btn">
+                    <div class="form-group text-center ">
+                        <button class="btn btn-data-login btn-block" (click)="updateuser()">Update</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

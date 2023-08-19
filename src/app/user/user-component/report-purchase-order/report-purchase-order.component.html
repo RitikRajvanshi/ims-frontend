@@ -1,0 +1,142 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-files-o" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Purchase Order</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="data-control-box">
+                <div class="container-fluid mt-0 pt-0">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                        <div class="row">
+                            <div class="ml-auto">
+                                <button class="btn btn-login-report m-2" (click)="exportToExcel()" >Export To
+                                    Excel</button>
+                            </div>
+                        </div>
+                    </div>
+    
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-12 col-12 ">
+                    <div class="data-form" [formGroup]="dateForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="date">Start Date</label>
+                                <input type="date" class="form-control" placeholder="Start Date"
+                                    formControlName="start_date" [(ngModel)]="dates.start_date">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="date">End Date</label>
+                                <input type="date" class="form-control" placeholder="End Date"
+                                    formControlName="end_date" [(ngModel)]="dates.end_date">
+                            </div>
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login " (click)="submitDate()">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-table" *ngIf="displayList">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-12 col-12 col-sm-12">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="input-group my-3  search-container">
+                                                <input type="text" class=" data-control form-control  mr-2"
+                                                    placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                                                    [(ngModel)]="searchItem">
+                                                <button type="submit"><i class="fa fa-filter"></i></button>
+                                                <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="container-fluid ">
+                            <div class="row">
+                                <div class="col-lg-12 col-12 col-sm-12 ">
+                                    <div class=" table-responsive overflow-auto " style="height: 80vh;">
+                                        <div id="tablepurchaseOrder" #tablepurchaseOrder>
+                                            <table class="table table-striped table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" style="width:5%">S NO.</th>
+                                                        <th scope="col" style="width:40%">Purchase Id</th>
+                                                        <th scope="col" style="width:35%">Supplier Name</th>
+                                                        <th scope="col" style="width:10%">Invoice</th>
+                                                        <th scope="col" style="width:10%">View PO</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr
+                                                        *ngFor="let data of purchaseDataList| filter:searchItem  | paginate:
+                                                {itemsPerPage: tableSize,
+                                                  currentPage: page, totalItems:purchaseDataList.length} ; let i = index ">
+    
+                                                        <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                                        <td>{{data.purchase_id}}</td>
+                                                        <td>{{data.supplier_name}}</td>
+                                                        <td> <a target="_blank"
+                                                                href='http://192.168.0.132:3009/files/{{data.filename}}'><i
+                                                                    class="fa fa-eye table-edit-icon "
+                                                                    aria-hidden="true"></i></a></td>
+                                                        <td><a [routerLink]="['../purchase-order-view',data.id, data.purchase_id]"><i
+                                                            class="fa fa-search table-edit-icon " aria-hidden="true"></i></a>      
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid mt-4 mb-4 ">
+                            <div class="row">
+                                <div class="col-lg-10  d-flex">
+                                    <div class="pagination "  class="active" >
+                                        <pagination-controls    previousLabel="Prev" nextLabel="Next" (pageChange)="ontableDatachange($event)">
+                                            </pagination-controls>
+                                
+                                    </div>
+                                </div>
+                                <div class="col-lg-2   ml-auto d-flex">
+                                    <div class="form-group  select-size">
+                                        <p class="mb-2  report-headings">Items/page</p>
+                                        <select class=" data-control  select-size form-control p-2" (change)="ontableSizechange($event)">
+            
+            
+                                            <option class="select-border p-2" selected="true" disable hidden>Select</option>
+                                            <option class="select-border p-2" *ngFor=" let size of tableSizes">{{size}}
+                                            </option>
+            
+            
+                                        </select>
+            
+                                    </div>
+            
+            
+                                </div>
+                            </div>
+                            
+                       </div>  
+                    </div>
+                </div>
+                
+        </div>
+
+    </div>
+</div>
+</div>

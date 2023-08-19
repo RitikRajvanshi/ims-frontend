@@ -1,0 +1,39 @@
+<!-- <div class="container bg-light text-dark">
+    <h1 class="text-dark" mat-dialog-title> Please Enter Quantity </h1>
+
+<div mat-dialog-content> 
+    <h1>Hiii</h1>
+      <mat-form-field appearance="fill">
+       <h1 class="text-dark">What's your name?</h1>
+        <input matInput>
+      </mat-form-field>
+
+    </div>
+    
+    
+      <button mat-raised-button>Ok</button>
+    </div> -->
+
+   
+    <form class="p-4 bg-light h-100 w-100 overflow-hidden"  [formGroup]="updateRequestForm">
+     
+
+        <div class="form-group my-2">
+          <label for="UserName" class="my-2">
+          <span class="text-danger">*</span>Quantity</label>
+          <input type="text my-2" class="form-control"  placeholder="Enter Designation" formControlName="quantity" [(ngModel)]="RequestData.quantity">
+       
+         
+        </div>
+       
+          
+        <button type="submit" class="btn btn-primary w-100 mb-5 mt-2 p-2" (click)="updatereq()">Granted</button>
+   
+      </form>
+
+
+    
+  
+    
+  
+

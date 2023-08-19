@@ -1,0 +1,51 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-check" aria-hidden="true"></i></div>
+    <div class="header-title">
+
+
+        <h1>Received Purchase Orders</h1>
+
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="data-box">
+                
+                <div class="data-content">
+                    <div class="data-table overflow-auto" style="height:90vh">
+                        <table class="table table-striped table-bordered table-hover " id="tablepurchaseOrder">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:5%;">S. NO</th>
+                                    <th scope="col" style="width:15%;">Purchase Id</th>
+                                    <th scope="col" style="width:45%;">Supplier's Name</th>
+                                    <th scope="col" style="width:20%;">Created Date</th>
+                                    <th scope="col" style="width:7%;">View</th>
+                                    <th scope="col" colspan="2">Action</th> 
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let items of purchaseData; let i = index">
+                                    <th scope="row">{{i+1}}</th>
+                                    <td>{{items.purchase_id}}</td>
+                                    <td>{{items.supplier_name}}</td>
+                                    <td>{{items.created_date | date: 'yyyy-MM-dd'}}</td>
+                               
+                                    <td> <button class="p-0 border-0"><a [routerLink]="['../purchase-order-view',items.id, items.purchase_id]"><i class="fa fa-eye table-edit-icon "aria-hidden="true"></i></a></button> </td>
+                                    <td><button  class="btn btn-sm btn-success text-light" (click)="onaccept(items.purchase_id)" >Accept</button></td>   
+                            
+                                    <td><button class="btn btn-sm btn-danger text-light" (click)="onreject(items.purchase_id)">Reject</button></td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
