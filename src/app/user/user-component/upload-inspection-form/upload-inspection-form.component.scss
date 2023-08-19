@@ -1,0 +1,18 @@
+select:disabled{
+    background-color: white;
+    color:black;
+}
+
+select:read-only{
+    background-color: white;
+    color:black;
+}
+
+
+input[type="date"]:read-only{
+    background-color: #F5FEFD;
+}
+
+input[type="text"]:read-only{
+    background-color: #F5FEFD;
+}

@@ -1,0 +1,19 @@
+.blink {
+    // animation: blinker 1.5s linear infinite;
+    color: red;
+    font-size:15pt;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 400;
+}
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+.section{
+    box-shadow: 2px 4px 10px 0 rgba(0, 34, 51, 0.05), 2px 4px 10px 0 rgba(0, 34, 51, 0.05);
+
+}
+
+

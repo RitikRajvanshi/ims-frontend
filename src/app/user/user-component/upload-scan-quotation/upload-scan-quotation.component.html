@@ -1,0 +1,146 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+    <div class="header-title">
+        
+       
+        <h1>Upload Scan Quotation</h1>
+        
+    </div>
+    
+
+    <div class="add-icon-section" *ngIf="toggleListBtn">
+        <button class="btn-toggle " (click)="toggleActionAdd()"><i class="fa fa-plus pr-1"></i>Quotation's List</button> 
+    </div>
+
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+        <button class="btn-toggle " (click)="toggleActionUpdate()"><i class="fa fa-plus pr-1"></i>Upload Quotation</button> 
+    </div>
+
+    </section>
+
+    <div class="container-fluid">
+        <div class="data-content">
+            <div class="page-background">
+               <div class="flex-box">
+                <div class="col-md-12 col-sm-12 col-lg-7   " *ngIf="display3">
+                    <div class="data-form" [formGroup]="uploadquotationForm">
+                        <h1 class="text-center form-heading">Upload Scan Quotation</h1>
+    
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Upload Pdf:</label>
+                            <div>
+                                <input type="file"  class=" btn form-control-file form-choosen-button" id="exampleFormControlFile1" (change)="getquotationname($event)"  name="pdf" accept = "application/pdf" formControlName='quotation_name' >
+                                <div class="mandatory my-1 text-danger"
+                                *ngIf="uploadquotationForm.get('quotation_name').hasError('required') && uploadquotationForm.get('quotation_name').touched">
+                                Quotation is Required.</div>  
+
+                                <div class="progress-container my-3 w-75 mx-auto"  *ngIf="uploadProgress > 0 && uploadProgress < 100">
+                                    <div class="progress-bar" [style.width]="uploadProgress + '%'"></div>      
+                                  </div>
+                                  <h3 class="ml-3"  *ngIf="uploadProgress > 0 && uploadProgress < 100"><strong>{{uploadProgress + '%'}} quotation uploaded</strong></h3>
+                            </div>
+                        </div>
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Request:</label>
+                            <select class="form-control data-control p-2" #request   formControlName='request_id' [(ngModel)]="uploadquotationData.request_id" (change)="selectedrequest(request.value)">
+
+                                <option class="select-border p-2" [selected]=true disabled hidden [value]=0>Select</option>
+
+                                <option class="select-border p-2" *ngFor="let items of requestData" [value]='items.request_id' >{{items.request_item}}</option>
+                                <div class="mandatory my-1 text-danger"
+                                *ngIf="uploadquotationForm.get('request_id').hasError('required') && uploadquotationForm.get('request_id').touched">
+                                Request is Required.</div>
+                              </select>
+                        </div>
+    
+                          <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>File Name:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter File Name " formControlName='file_name' [(ngModel)]="fileName.file_name" readonly/>
+    
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Description:</label>
+                            <textarea class="form-control p-2" id="floatingTextarea2"  placeholder="Enter Description "  rows="6" formControlName="description" [(ngModel)]="uploadquotationData.description"></textarea>
+                            <div class="mandatory my-1 text-danger"
+                            *ngIf="uploadquotationForm.get('description').hasError('required') && uploadquotationForm.get('description').touched">
+                            Some Description is Required.</div>
+                        </div>
+                       
+    
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button type="submit" class="btn btn-data-login btn-block" *ngIf="display1" (click)="uploadquotation()">Add</button>
+                        </div>
+                    </div>
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button type="submit" class="btn btn-data-login btn-block" *ngIf="display2" (click)="uploadquotation()">Update</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+               </div>
+                <!-- <div class="data-control-box"     *ngIf="display4">
+                     -->
+                <div class="data-content"  *ngIf="display4">
+                    <h1 class="text-center form-heading">Quotation's List</h1> 
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="input-group my-3  search-container">
+    
+                                <input type="text" class=" data-control form-control mr-2"
+                                    placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                                    [(ngModel)]="searchItem">
+                                <button type="submit"><i class="fa fa-filter"></i></button>
+                                <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <h1 class="text-center form-heading">Quotation List</h1>  -->
+                    <div class="data-table overflow-auto" style="height: 90vh;">
+                            
+                        <table class="table table-striped table-bordered table-hover ">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:5%;">S. NO</th>
+                                    <th scope="col" style="width:20%;">Quotation Id</th>
+                                    <th scope="col" style="width:15%;">Quotation Name</th>
+                                    <th scope="col" style="width:15%;">Category Name</th>
+                                    <th scope="col" style="width:15%;">Description</th>
+                                    <th scope="col" style="width:5%;">Downloads</th>
+                                    <th scope="col" style="width:5%;">View</th>
+                                    <th scope="col" style="width:5%;">Update</th>
+                                    <th scope="col" style="width:10%;">Created Date</th>
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <tr *ngFor="let items of getquotationData| filter:searchItem; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{items.quotation_id}}</td>
+                                        <td>{{items.quotation_name}}</td>
+                                        <td>{{items.request_item}}</td>
+                                        <td>{{items.description}}</td>
+                                    <td> <i class="fa fa-download table-edit-icon" (click)="downloadPDF(items.quotation_name)"></i></td>
+                                    <td><a target="_blank" href='http://192.168.0.132:3009/files/{{items.quotation_name}}'><i class="fa fa-search table-edit-icon " aria-hidden="true"></i></a></td>
+                                    <td><i class="fa fa-edit table-edit-icon " aria-hidden="true" (click)="updatequotation(items.quotation_id)"></i></td>
+                                    <td>{{items.created_date | date: 'yyyy-MM-dd'}}</td>
+                            
+                                    
+                                </tr>
+                           
+                                
+                              
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+

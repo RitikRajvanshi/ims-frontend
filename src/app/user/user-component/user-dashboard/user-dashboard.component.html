@@ -1,0 +1,102 @@
+<section class="content-header">
+  <div class="header-icon"><i class="fa fa-home" aria-hidden="true"></i></div>
+  <div class="header-title">
+
+    <h1>Welcome {{userName}}</h1>
+
+  </div>
+</section>
+
+<!-- <div class="d-flex align-items-center justify-content-center" style="height:90vh"> -->
+<!-- <div *ngIf="OrderCount > 0 && userRole == '26'">  -->
+<!-- received-purhchase-order -->
+<!-- <marquee><a routerLink="/user/received-purhchase-order" class="blink">You have {{OrderCount}} purchase orders pending for approval ....</a></marquee>
+        </div> -->
+<!-- <div *ngIf="requestCount > 0 && userRole == '26'"> 
+             <marquee><a routerLink="/user/received-request" class="blink" >You have {{requestCount}} requests pending for approval.....</a></marquee>
+            </div> -->
+<!-- </div> -->
+
+<!-- <div class="d-flex align-items-center flex-wrap justify-content-center  dash-direction"  > 
+    <div class="section  rounded dash-box" style="background-color:#faf8f8;">
+        <h2>Amount of Purchasing</h2>
+        <span>(this financial year)</span>
+        <h3 class="text-info"><strong>₹{{financialReport.sumtotal!== null ? financialReport.sumtotal:'N/A'}}</strong></h3>
+
+        </div>
+        <div class="section  rounded dash-box " style="background-color:#faf8f8;">
+            <h2>Numbers of PO</h2>
+        <span>(this financial year)</span>
+        <h3 class="text-info" ><strong>{{financialReport.count!== null ? financialReport.count:'N/A'}}</strong></h3>
+
+
+        </div>
+        <div class="d-flex align-items-center flex-wrap justify-content-center dash-direction dash" style="width: 100%; background-color: #fff;;"> 
+            <div class="section  rounded dash-box" style="background-color:#faf8f8;">
+                <h2>Amount of Purchase Order</h2>
+                <span>(this month)</span>
+                <h3 class="text-info"><strong>₹{{monthlyReport.sumtotal!== null ? monthlyReport.sumtotal : 0}}</strong></h3>
+                </div>
+                <div class="section rounded dash-box" style="background-color:#faf8f8;">
+                    <h2>Numbers of PO</h2>
+                <span>(this month)</span>
+                <h3 class="text-info" ><strong>{{monthlyReport.count!== null ? monthlyReport.count : 0}}</strong></h3>
+
+
+                </div>
+                </div> 
+        </div>  -->
+
+ <div class="d-flex align-items-center justify-content-center" > 
+ <div *ngIf="OrderCount > 0 && userRole == '26'"> 
+ received-purhchase-order 
+ <marquee><a routerLink="/user/received-purhchase-order" class="blink">You have {{OrderCount}} purchase orders pending for approval ....</a></marquee>
+        </div> 
+ <div *ngIf="requestCount > 0 && userRole == '26'"> 
+             <marquee><a routerLink="/user/received-request" class="blink" >You have {{requestCount}} requests pending for approval.....</a></marquee>
+            </div> 
+ </div> 
+<div class="dashboard-background">
+  <div class="dashboard-box">
+    <div class="container dashboard-container">
+      <div class="container">
+        <div class="row">
+          <div class="col-6 col-md-6 col-lg-6 col-sm-6">
+            <div class="dash-boxes rounded">
+              <h4>Amount of Purchased</h4>
+              <h6>(this financial year)</h6>
+              <p class="text-info"><strong>₹{{financialReport.sumtotal!== null ? financialReport.sumtotal:'N/A'}}</strong></p>
+            </div>
+          </div>
+          <div class="col-6 col-md-6 col-lg-6 col-sm-6">
+            <div class="dash-boxes rounded">
+              <h4>Number of PO</h4>
+              <h6>(this financial year)</h6>
+              <p class="text-info"><strong>{{financialReport.count!== null ? financialReport.count:'N/A'}}</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container ">
+        <div class="row">
+          <div class="col-6 col-md-6 col-lg-6 col-sm-6">
+            <div class="dash-boxes rounded">
+              <h4>Amount of Purchased</h4>
+              <h6>(this Month)</h6>
+              <p class="text-info"><strong>₹{{monthlyReport.sumtotal!== null ? monthlyReport.sumtotal : 0}}</strong></p>
+            </div>
+          </div>
+          <div class="col-6 col-md-6 col-lg-6 col-sm-6 ">
+            <div class="dash-boxes rounded">
+              <h4>Number of PO</h4>
+              <h6>(this Month)</h6>
+              <p class="text-info">{{monthlyReport.count!== null ? monthlyReport.count : 0}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

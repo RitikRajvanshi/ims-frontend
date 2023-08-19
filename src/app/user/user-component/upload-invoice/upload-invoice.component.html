@@ -1,0 +1,142 @@
+
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
+    <div class="header-title">
+         <h1>Upload Invoice</h1>
+       </div>
+       
+
+    <div class="add-icon-section" *ngIf="toggleListBtn">
+        <button class="btn-toggle "  (click)="toggleActionAdd()"><i class="fa fa-plus pr-1"></i>Invoice List</button> 
+    </div>
+
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+        <button class="btn-toggle "  (click)="toggleActionUpdate()"><i class="fa fa-plus pr-1"></i>Add Invoice</button> 
+    </div>
+
+
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="flex-box">
+                <div class="col-md-12 col-sm-12 col-lg-7" *ngIf="display3">
+                    <div class="data-form"  [formGroup]="invoiceForm">
+                        <h1 class="text-center form-heading"> Invoice</h1>
+    
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Purchase Id:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Purchase Id " [readonly]='readonly'  formControlName="purchase_id" 
+                            id="search-text" autocomplete="off"  [(ngModel)]="purchaseData2.purchase_id"   (keypress)="showData()" (mouseover)="hidedata()" (click)="showData()" value="{{selectedpurchaseData}}"/>
+    
+                            <!-- [(ngModel)]="searchText"  -->
+    
+                            <ul class="list-group list-group-flush position-absolute"  style="height:70%; overflow-y: auto;" id="list" *ngIf="display">
+              
+    
+                                <!-- results of ngFor is passed to appFilter with argument searchText -->
+                                <li class="list-group-item m-0 p-0"   style="z-index:9;width:10rem;" *ngFor="let data of purchasedataArray | searchFilter: searchText">
+                          
+                                  <!-- including -->
+                                  <button type="button"  class="btn btn-group w-100" (click)="selectPurchaseid(data)" value="data">{{data}}</button>
+                                </li>
+                              </ul>
+                              <div class="mandatory my-1 text-danger"
+                              *ngIf="invoiceForm.get('purchase_id').hasError('required') && invoiceForm.get('purchase_id').touched">
+                              Purchase Id is Required.</div>  
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Invoice No.:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Invoice No " formControlName='invoice_no' (mouseover)="hidedata()" [(ngModel)]="purchaseData.invoice_no"/>
+                            <div class="mandatory my-1 text-danger"
+                            *ngIf="invoiceForm.get('invoice_no').hasError('required') && invoiceForm.get('invoice_no').touched">
+                            Invoice No. is Required.</div>  
+                        </div>
+    
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Invoice Pdf:</label>
+                            <div>
+                                <input type="file" class=" btn form-control-file form-choosen-button " name="pdf" accept = "application/pdf" formControlName='filename' (change)="selectFile($event)">
+                                
+                             
+                                 
+                                 <div class="mandatory my-1 text-danger"
+                                 *ngIf="invoiceForm.get('filename').hasError('required') && invoiceForm.get('filename').touched">
+                                 Filename is Required.
+                                 </div>  
+                                 
+                                 <div class="progress-container my-3 w-75 mx-auto"  *ngIf="uploadProgress > 0 && uploadProgress < 100">
+                                    <div class="progress-bar" [style.width]="uploadProgress + '%'"></div>
+                                    
+
+                                  </div>
+                                  <h3 class="ml-3"  *ngIf="uploadProgress > 0 && uploadProgress < 100"><strong>{{uploadProgress + '%'}} file uploaded</strong></h3>
+                                 </div>
+                           
+    
+                        </div>
+                       
+                       
+    
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button type="submit" class="btn btn-data-login btn-block"  *ngIf="display1" (click)="uploadInvoice()">Add</button>
+                          
+                            <button type="submit" class="btn btn-data-login btn-block"  *ngIf="display2" (click)="uploadInvoice()">Update</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- <mat-progress-bar mode="query" class="custom-progress-bar"
+            color="primary"  [value]="uploadProgress"></mat-progress-bar> -->
+
+        
+            <!-- <div class="data-control-box"> -->
+               
+                <div class="data-content"  *ngIf="display4">
+                    
+                    <h1 class="text-center form-heading">Invoice's List</h1> 
+                    <div class="input-group  my-3  search-container w-25 ">
+                
+                        <input type="text" class=" data-control form-control mr-2"
+                            placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                            [(ngModel)]="searchItem">
+                        <button type="submit"><i class="fa fa-filter"></i></button>
+                        <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+            
+                    </div>
+                    <div class="data-table">
+                        <div class=" table-responsive  overflow-auto " style="height: 80vh;">
+                        <table class="table table-striped table-bordered table-hover overflow-auto"  style="height: 80vh;">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width:5%;">S. NO</th>
+                                    <th scope="col" style="width:40%;">Purchase Id</th>
+                                    <th scope="col" style="width:25%;">Invoice No</th>
+                                    <th scope="col" style="width:10%;">View</th>
+                                
+                                    <th scope="col" style="width:10%;">Edit</th>
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <tr *ngFor="let item of getpurchaseDatafrompo| filter:searchItem; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{item.purchase_id}}</td>
+                                        <td>{{item.invoice_no}}</td>
+                                    <td><a  target="_blank" href='http://192.168.0.132:3009/files/{{item.filename}}'><i class="fa fa-search table-edit-icon " aria-hidden="true"></i></a></td>
+                             
+                                    <td><i class="fa fa-edit table-edit-icon " aria-hidden="true" (click)="updateInvoicebtn(item.purchase_id)"></i> </td>                              
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

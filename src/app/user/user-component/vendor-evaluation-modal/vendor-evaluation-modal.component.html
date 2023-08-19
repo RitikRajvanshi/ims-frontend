@@ -1,0 +1,40 @@
+<div class="section bg-light h-100 w-100 overflow-hidden">
+    <div *ngIf="supplierDatalength==0">
+        <h1 class="text-danger text-center p-5">No Data Found....</h1>
+    </div>
+
+
+                        <table class="table table-bordered table-hover" *ngIf="supplierDatalength!=0">
+                            <caption style="text-align:center; caption-side:top; color:white">Average Evaluation: &nbsp; &nbsp; <span style="font-weight: 700;">{{averageGradingVar}}</span></caption>
+                            <thead>  
+                                <tr>
+                                    <th scope="col">S NO.</th>
+                                    <th scope="col">Vendor's Name</th>
+                                    <th scope="col">Evaluation Date</th>
+                                    <th scope="col">Evaluation Basis</th>
+                                    <th scope="col">Quality Grade</th>
+                                    <th scope="col">Price Grade</th>
+                                    <th scope="col">Communication Grade</th>
+                                    <th scope="col">Delivery Basis Grade</th>
+                                    <th scope="col">Commitment Basis Grade</th>
+                                    <th scope="col">Status</th>
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <tr *ngFor="let data of supplierEvaluationData; let i = index">
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{data.supplier_name}}</td>
+                                        <td>{{data.evaluation_date | date: 'yyyy-MM-dd'}} </td>
+                                        <td>{{data.evaluation_basis}}</td>
+                                        <td>{{data.qualitybasis_grading}}</td>
+                                        <td>{{data.pricebasis_grading}}</td>
+                                        <td>{{data.communicationbasis_grading}}</td>
+                                        <td>{{data.deliverybasis_grading}}</td>
+                                        <td>{{data.commitmentbasis_grading}}</td>
+                                        <td>{{data.vendor_status}}</td>
+                            </tbody>
+                        </table>
+                        </div>
