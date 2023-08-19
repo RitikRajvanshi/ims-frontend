@@ -1,0 +1,73 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-question" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Generate Request</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-7 ">
+                    <div class="data-form" [formGroup]="generateRequestForm">
+                        <h1 class="text-center form-heading">Add Request</h1>
+
+                        <div class="form-group  m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Item:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Request "
+                                formControlName="request_item" id="search-text" autocomplete="off"
+                                [(ngModel)]="generaterequestData.request_item" (click)="showData()" value="{{request}}" />
+
+                            <ul class="list-group list-group-flush position-absolute"
+                                style="height:50%; overflow-y: auto;" id="list" *ngIf="display">
+
+
+                                <!-- results of ngFor is passed to appFilter with argument searchText -->
+                                <li class="list-group-item m-0 p-0" style="z-index:9; width:10rem;"
+                                    *ngFor="let item of productdataArray | searchFilter: searchText">
+
+                                    <!-- including -->
+                                    <button type="button" class="btn btn-group w-100 rounded-0"
+                                        (click)="selectRequest(item)">{{item}}</button>
+                                </li>
+                            </ul>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="generateRequestForm.get('request_item').hasError('required') && generateRequestForm.get('request_item').touched">
+                                Item is Required.
+                            </div>
+
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"
+                                placeholder="Request"><sup>*</sup>Quantity:</label>
+                            <input type="number" class="form-control data-control p-2" placeholder="Enter Quantity "
+                                formControlName="quantity" (mouseover)="hidedata()"
+                                [(ngModel)]="generaterequestData.quantity" />
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="generateRequestForm.get('quantity').hasError('required') && generateRequestForm.get('quantity').touched">
+                                Quantity is Required.
+                            </div>
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Remark:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Remark "
+                                formControlName="remark" [(ngModel)]="generaterequestData.remark" />
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="generateRequestForm.get('remark').hasError('required') && generateRequestForm.get('remark').touched">
+                                Remark is Required.
+                            </div>
+                        </div>
+
+
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block" (click)="addrequest()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

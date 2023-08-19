@@ -1,0 +1,143 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Add Vendor</h1>
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="flex-box">
+                <div class=" col-md-12 col-sm-12 col-lg-7  ">
+                    <div class="  data-form" [formGroup]="addSupplierForm">
+                        <h1 class="text-center form-heading">Add Vendors</h1>
+
+                        <div class="form-group  m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Vendor's Name:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Supplier Name "
+                                formControlName='supplier_name' [(ngModel)]="supplierdata.supplier_name" />
+
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('supplier_name').hasError('required') && addSupplierForm.get('supplier_name').touched">
+                                Supplier Name is Required.</div>
+
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="contact" class="form-label"><sup>*</sup>Contact Person:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Contact Person "
+                                formControlName="contact_person" [(ngModel)]="supplierdata.contact_person" />
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('contact_person').hasError('required') && addSupplierForm.get('contact_person').touched">
+                                Contact Person is Required.</div>
+
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="rating" class="form-label"> <sup>*</sup>Rating</label>
+                            <select class="form-control data-control p-2" formControlName="rating"
+                                [(ngModel)]="supplierdata.rating">
+
+                                <option class="select-border p-2" [selected]=true disabled hidden value="null">Select</option>
+
+                                <option class="select-border p-2">A+</option>
+                                <option class="select-border p-2">A</option>
+                                <option class="select-border p-2">B</option>
+                                <option class="select-border p-2">C</option>
+                                <option class="select-border p-2">D</option>
+
+                            </select>
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('rating').hasError('required') && addSupplierForm.get('rating').touched">
+                                Rating is Required.</div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Address:</label>
+                            <textarea class="form-control data-control " id="address" rows="3" formControlName="address"
+                                [(ngModel)]="supplierdata.address"></textarea>
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('address').hasError('required') && addSupplierForm.get('address').touched">
+                                Address is Required.</div>
+                        </div>
+
+
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Phone:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Phone "
+                                formControlName="phone" maxlength="10"  [(ngModel)]="supplierdata.phone" />
+                                <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('phone').hasError('pattern') && addSupplierForm.get('phone').touched">
+                                10 digit number is allowed.</div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Mobile:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Mobile"
+                                formControlName="mobile" maxlength="10" [(ngModel)]="supplierdata.mobile" />
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('mobile').hasError('required') && addSupplierForm.get('mobile').touched">
+                                Supplier mobile is Required.</div>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('mobile').hasError('pattern') && addSupplierForm.get('mobile').touched">
+                                10 digit number is allowed.</div>
+                        </div>
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Email:</label>
+                            <input type="email" class="form-control data-control p-2" placeholder="Enter Email "
+                                formControlName="email" [(ngModel)]="supplierdata.email" />
+
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('email').hasError('required') && addSupplierForm.get('email').touched">
+                                Supplier email is Required.
+                            </div>
+                            <div class="mandatory mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('email').hasError('pattern') && addSupplierForm.get('email').touched">
+                                Email Address is not valid.</div>
+                        </div>
+
+                        
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label">GSTIN:</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter Vendor's GSTIN"
+                                formControlName="gstn" maxlength="16" [(ngModel)]="supplierdata.gstn" />
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="inputEmail4" class="form-label">PAN No.</label>
+                            <input type="text" class="form-control data-control p-2" placeholder="Enter PAN"
+                                formControlName="pan_no" maxlength="10" [(ngModel)]="supplierdata.pan_no" />
+                        </div>
+
+                        <div class="form-group m-2">
+                            <label for="category" class="form-label"> <sup>*</sup>Category</label>
+                            <select class="form-control data-control p-2" formControlName="category"
+                                [(ngModel)]="supplierdata.category">
+
+                                <option [selected]=true disabled hidden value='null'>Select</option>
+
+                                <!-- <option selected="true" [disabled]=true value="">Select</option> -->
+                                <option class="select-border p-2 " value="0">Offline</option>
+                                <option class="select-border p-2" value="1">Online</option>
+
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="addSupplierForm.get('category').hasError('required') && addSupplierForm.get('category').touched">
+                                Category is Required.
+                            </div>
+                        </div>
+
+                        <div class="data-form-btn  ">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block" (click)="addnewSupplier()"
+                                    autocomplete="on">Add</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

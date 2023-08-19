@@ -1,0 +1,174 @@
+<app-preloader [showpreLoader]="isLoading"></app-preloader>
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+    <div class="header-title">
+
+
+        <h1>Purchase Order List</h1>
+
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="data-control-box">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="input-group  my-3  search-container">
+
+                                        <input type="text" class=" data-control form-control mr-2"
+                                            placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                                            [(ngModel)]="searchItem">
+                                        <button type="submit"><i class="fa fa-filter"></i></button>
+                                        <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                 <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12 col-12 col-sm-12 ">
+                            <div class=" table-responsive overflow-auto " style="height: 80vh;">
+                                <table class="table table-striped table-bordered table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" style="width:5%;">S. NO</th>
+                                            <th scope="col" style="width:15%;">Purchase Id</th>
+                                            <th scope="col" style="width:45%;">Supplier's Name</th>
+                                            <th scope="col">Created Date</th>
+                                            <th scope="col" style="width:7%;">View</th>
+                                            <th scope="col" style="width:8%;">Send</th>
+                                            <th scope="col" style="width:8%;">Approval Date</th>
+                                           
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngIf="userRole!=='26'">
+                                        <tr *ngFor="let items of purchaseData| filter:searchItem | paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:purchaseData.length}; let i = index">
+                                            <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td>{{items.purchase_id}}</td>
+                                            <td>{{items.supplier_name}}</td>
+                                            <td>{{items.created_date | date: 'yyyy-MM-dd'}}</td>
+                                           
+
+                                            <td> <a [routerLink]="['../purchase-order-view',items.id, items.purchase_id]"><i
+                                                        class="fa fa-eye table-edit-icon " aria-hidden="true"></i></a>
+                                            </td>
+                                            <td>
+                                                <button type="button" class=" btn-info sent-button "
+                                                    (click)="sendOrder(items.purchase_id)"
+                                                    *ngIf="userRole!=='26' && (items.is_sent == 0 ||items.is_sent == 1)"
+                                                    [disabled]="items.is_sent == 1">Sent</button>
+
+                                                <span class="text-success" *ngIf="items.is_sent == 2">Approved</span>
+                                                <span class="text-danger" *ngIf="items.is_sent == 3">Rejected</span>
+                                            </td>
+                                            
+
+                                            <td *ngIf="items.po_approval_date!==null">{{items.po_approval_date | date: 'yyyy-MM-dd'}}</td>
+                                            <td *ngIf="items.po_approval_date===null">Approval is pending</td>
+
+                                        </tr>
+
+                                    </tbody>
+
+                                    <tbody *ngIf="userRole=='26'">
+                                        <tr *ngFor="let items of purchaseDataacceptorReject| filter:searchItem | paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:purchaseDataacceptorReject.length}; let i = index">
+                                            <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                            <td>{{items.purchase_id}}</td>
+                                            <td>{{items.supplier_name}}</td>
+                                            <td>{{items.created_date | date: 'yyyy-MM-dd'}}</td>
+                                            
+
+                                            <!-- //here id is going to be unedined please check  -->
+
+                                            <td> <button class="p-0 border-0"><a
+                                                        [routerLink]="['../purchase-order-view',items.id, items.purchase_id]"><i
+                                                            class="fa fa-eye table-edit-icon "
+                                                            aria-hidden="true"></i></a></button> </td>
+                                            <td>
+                                                <!-- <button type="button" class=" btn-info sent-button " (click)="sendOrder(items.purchase_id)" *ngIf="userRole!=='26' && (items.is_sent == 0 ||items.is_sent == 1)" [disabled]="items.is_sent == 1" >Sent</button> -->
+
+                                                <span class="text-success" *ngIf="items.is_sent == 2">Approved</span>
+                                                <span class="text-danger" *ngIf="items.is_sent == 3">Rejected</span>
+                                            </td>
+
+                                            <td *ngIf="items.po_approval_date!==null">{{items.po_approval_date | date: 'yyyy-MM-dd'}}</td>
+                                            <td *ngIf="items.po_approval_date===null">Approval is pending from your side</td>
+
+
+                                        </tr>
+
+                                    </tbody>
+
+                                    <!-- <tbody *ngIf="userRole!=='26'">
+                                    <tr *ngFor="let items of purchaseData| filter:searchItem | paginate:
+                                    {itemsPerPage: tableSize,
+                                      currentPage: page, totalItems:purchaseData.length}; let i = index">
+                                        <th scope="row">{{ (page - 1) * tableSize + i +1 }}</th>
+                                        <td>{{items.purchase_id}}</td>
+                                        <td>{{items.supplier_name}}</td>
+                                        <td>{{items.created_date | date: 'yyyy-MM-dd'}}</td>
+                                   
+                                        <td> <button class="p-0 border-0"><a [routerLink]="['../purchase-order-view',items.id, items.purchase_id]"><i class="fa fa-eye table-edit-icon "aria-hidden="true"></i></a></button> </td>
+                                                <td> <button type="button" class=" btn-info sent-button " (click)="sendOrder(items.purchase_id)" [disabled]="items.is_sent == 1" >Sent</button>
+                                                
+                                                    <span class="text-success" *ngIf="items.is_sent == 2">Approved</span>   <span class="text-danger" *ngIf="items.is_sent == 2">Rejected</span></td>
+    
+                                    </tr>
+                               
+                                </tbody> -->
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-fluid mt-4 mb-4 ">
+                    <div class="row">
+                        <div class="col-lg-10  d-flex">
+                            <div class="pagination "  class="active" >
+                                <pagination-controls    previousLabel="Prev" nextLabel="Next" (pageChange)="ontableDatachange($event)">
+                                    </pagination-controls>
+                        
+                            </div>
+                        </div>
+                        <div class="col-lg-2   ml-auto d-flex">
+                            <div class="form-group  select-size">
+                                <p class="mb-2  report-headings">Items/page</p>
+                                <select class=" data-control  select-size form-control p-2" (change)="ontableSizechange($event)">
+    
+    
+                                    <option class="select-border p-2" selected="true" disable hidden>Select</option>
+                                    <option class="select-border p-2" *ngFor=" let size of tableSizes">{{size}}
+                                    </option>
+    
+    
+                                </select>
+    
+                            </div>
+    
+    
+                        </div>
+                    </div>
+                    
+               </div> 
+            </div>
+        </div>
+    </div>
+</div>

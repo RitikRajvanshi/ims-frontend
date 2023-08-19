@@ -1,0 +1,100 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-file-text" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Designation</h1>
+    </div>
+    
+    <div class="add-icon-section" *ngIf="toggleAddbtn">
+        <button class="btn-toggle "   (click)="toggleActionAdd()"><i class="fa fa-plus pr-1"></i>Add Designation</button> 
+    </div>
+
+    <div class="add-icon-section"  *ngIf="toggleListBtn">
+        <button class="btn-toggle "  (click)="toggleActionUpdate()"><i class="fa fa-plus pr-1"></i> Designation List</button> 
+  
+</div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+           <div class="flex-box">
+            <div class="col-md-12 col-sm-12 col-lg-7" *ngIf="display1">
+                <div class="data-form">
+                    <h1 class="text-center form-heading">Add Designation</h1>
+                    <div class="form-group m-0" [formGroup]="addDesignationForm">
+                        <label for="inputEmail4" class="form-label"><sup>*</sup>Designation Name:</label>
+                        <input type="text" class="form-control data-control p-2" placeholder="Enter Designation Name"  formControlName="designation_name" [(ngModel)]="designationData.designation_name"/>
+                    </div>
+
+                    <div class="mandatory my-1 text-danger"
+                    *ngIf="addDesignationForm.get('designation_name').hasError('required') && addDesignationForm.get('designation_name').touched">
+                    Designation is Required.
+                  </div>
+
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button class="btn btn-data-login btn-block"  *ngIf="addDesignbtn" (click)="addDesignationfunc()">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="data-form-btn">
+                        <div class="form-group text-center ">
+                            <button class="btn btn-data-login btn-block" *ngIf="updateDesignbtn"  (click)="updateDesignationfunc()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+           </div>
+           
+
+
+        <div class="data-control-box" *ngIf="display2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="input-group my-3  search-container">
+
+                                    <input type="text" class=" data-control form-control mr-2"
+                                        placeholder="Enter Any Text...." aria-describedby="basic-addon2"
+                                        [(ngModel)]="searchItem">
+                                    <button type="submit"><i class="fa fa-filter"></i></button>
+                                    <!-- <input type="text" class="form-control" placeholder="Enter Supplier Name"  aria-describedby="basic-addon2" [(ngModel)]="searchItem2" (ngModelChange)="EmptySearchItem()"> -->
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-12 col-sm-12 ">
+                        <div class=" table-responsive overflow-auto " style="height: 80vh;">
+                            <table class=" table table-striped table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width:5%;">S. NO</th>
+                                    <th scope="col" style="width:80%;" >Designation Name: </th>
+                                    <th scope="col" colspan="2" style="width:10%;">Action</th>
+            
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let items of designationdata| filter:searchItem; let i = index"> 
+                                        <th scope="row">{{i+1}}</th>
+                                        <td>{{items.designation_name}}</td>
+                                        <td><i class="fa fa-edit table-edit-icon " aria-hidden="true" (click)="updatedesign(items)"></i></td>
+                                        <td><i class="fa fa-trash table-edit-icon " aria-hidden="true" (click)="designRemove(items.designation_id)"></i></td>
+                                  </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

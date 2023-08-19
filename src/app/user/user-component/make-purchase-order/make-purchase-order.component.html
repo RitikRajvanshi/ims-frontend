@@ -1,0 +1,207 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-list-alt" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Make Purchase Order</h1>   
+    </div>
+</section>
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+           <div class="data-control-box" [formGroup]="purchaseForm">
+            <div >
+                
+            <div class="flex-container" >
+                <div><input type="radio" id="html" checked="checked"  name="fav_language" value="HTML" (click)="newPurchaseId()">
+                      <label for="html" class="text-center form-heading-radio-btn">New Purchase ID</label><br></div>
+                  <div><input type="radio" id="html" name="fav_language" value="HTML" (click)="existingPurchaseId()">
+                      <label for="html" class="text-center form-heading-radio-btn">Existing Purchase ID</label><br></div> 
+              </div>
+                <div class="data-table">
+                    <table class="table table-striped table-bordered table-hover ">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width:5%;">S. NO</th>
+                                <th scope="col" style="width:35%;">Purchase ID</th>
+                                <th scope="col" style="width:40%;">Supplier Name</th>
+                                <th scope="col" style="width:10%;">Issued Date</th>
+                                <th scope="col" style="width:10%;">Expected Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+
+
+                                <td *ngIf="display1">
+                                <input type="text" class="form-control description-btn " placeholder="Purchase ID"  formControlName="purchase_id" [(ngModel)]="new_prchase_id" [value]='new_prchase_id' readonly/>
+                                </td>
+
+                                <td *ngIf="display2">
+                                    <input type="text" class="form-control description-btn " placeholder="Purchase ID" autocomplete="off" #purchase [readOnly]="read2"  [(ngModel)]="searchText2"   (click)="showData2()" (mouseover)="hidedata()" value="{{selectedPurchaseId}}" formControlName="purchase_id" placeholder="Purchase Id"/>
+                                    <ul class="list-group list-group-flush position-absolute"  style="height:35%; overflow-y: auto;" id="list" *ngIf="display3">
+          
+
+                                        <!-- results of ngFor is passed to appFilter with argument searchText -->
+                                        <li class="list-group-item m-0 p-0 " style="z-index:9;width:10rem;" *ngFor="let item of getpurchasedatafrompoArray | searchFilter: searchText2" >
+                                  
+                                          <!-- including -->
+                                          <button type="button"  class="btn btn-group w-100  rounded-0 "  (click)="selectPurchaseid(item)" [value]=item>{{item}}</button>
+                                        </li>
+
+                                        </ul>
+                                        <div class="mandatory my-1 text-danger"
+                                        *ngIf="!this.clickedPurchaseIdbtn && purchaseForm.get('purchase_id').touched">
+                                        Purchase Id is Required.</div>
+                                        
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control description-btn "  autocomplete="off" [readOnly]="read" #search placeholder=" Enter Supplier Name..."  (mouseover)="hidedata2()" [(ngModel)]="searchText" (click)="showData()" value="{{selectedSupplier}}" formControlName="supplier_id"/>
+                                    <ul class="list-group list-group-flush overflow-auto position-absolute"  style="height:35%; overflow-y: auto;" id="list" *ngIf="display">
+          
+
+                                        <!-- results of ngFor is passed to appFilter with argument searchText -->
+                                        <li class="list-group-item m-0 p-0" style="z-index:9" *ngFor="let data of getsupplierDataArray | searchFilter: searchText">
+                                  
+                                          <!-- including -->
+                                          <button type="button" class="btn btn-group w-100 rounded-0" (click)="selectSupplier(data)" [value]=data>{{data}}</button>
+                                        </li>
+                                      </ul>
+                                  
+
+                                       <div class="mandatory my-1 text-danger"
+                                      *ngIf="!this.clickedSupplierbtn && purchaseForm.get('supplier_id').touched ">
+                                      Supplier Name is Required.</div> 
+                                
+                                    
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control description-btn "  formControlName="issue_date"  [(ngModel)]="purchaseData.issue_date" (mouseover)="hidedata()" (mouseover)="hidedata2()">
+                            
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control description-btn "  formControlName="expected_date"  [(ngModel)]="purchaseData.expected_date">
+                
+                                </td>
+                                
+                                
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="flex-box"> <div class="col-lg-7 col-md-12 col-sm-12 ">
+                    <div class="data-form" >
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Product:</label>
+                            <select   #product  class="form-control data-control p-2" formControlName="product_id" (change)="productId(product.value)" [(ngModel)]="purchaseData.product_id">
+
+                                <option hidden disable [value]=0>Select</option>
+          
+                                <!-- <option selected="true" [disabled]=true value="">Select</option> -->
+                                <option  class="select-border p-2" *ngFor=" let name of getproductData" [value]="name.product_id">{{name.product_name}}</option>
+                             
+                          
+                              </select>
+                              <div class="mandatory my-1 text-danger"
+                              *ngIf="purchaseForm.get('product_id').hasError('required') && purchaseForm.get('product_id').touched">
+                              Product is Required.</div>
+
+                              <div class="mandatory mandatory my-1 text-danger"
+                              *ngIf="purchaseForm.get('product_id').hasError('pattern') && purchaseForm.get('product_id').touched">
+                              Product is Required.</div>
+                       
+    
+                        </div >
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Unit Price(₹):</label>
+                            <input type="number" step="any"   class="form-control data-control p-2" placeholder="Enter Unit Price"  formControlName="unit_price" (input)="calculatesubtotal()" [(ngModel)]="purchaseData.unit_price"/>
+                            <div class="mandatory my-1 text-danger"
+                            *ngIf="purchaseForm.get('unit_price').hasError('required') && purchaseForm.get('unit_price').touched">
+                           Price is Required.</div>
+
+                           <div class="mandatory mandatory my-1 text-danger"
+                           *ngIf="purchaseForm.get('unit_price').hasError('pattern') && purchaseForm.get('unit_price').touched">
+                           Price never be zero or null.</div>
+                        </div>
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Quantity(Unit):</label>
+                            <input type="number" step="any"  class="form-control data-control p-2" placeholder="Enter Quantity "  formControlName="quantity" (input)="calculatesubtotal()" [(ngModel)]="purchaseData.quantity"/>
+                            <div class="mandatory my-1 text-danger"
+                            *ngIf="purchaseForm.get('quantity').hasError('required') && purchaseForm.get('quantity').touched">
+                            Quantity is Required.</div>
+
+                            <div class="mandatory mandatory my-1 text-danger"
+                            *ngIf="purchaseForm.get('quantity').hasError('pattern') && purchaseForm.get('quantity').touched">
+                            Quantity never be zero or null.</div>
+                        </div>
+
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Discount(₹):</label>
+                            <input  type="number" step="any" class="form-control data-control p-2" placeholder="Enter Discount" formControlName="discount_in_rs" (input)="calculatesubtotal()" (input)="calculateTotal()"  [(ngModel)]="purchaseData.discount_in_rs"/>
+                    
+                        </div>
+
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Sub Total(₹):</label>
+                            <input type="number" step="any" class="form-control data-control p-2" placeholder="Enter Sub Total" formControlName="sub_total" (change)="calculateGST()" (change)="calculatesubtotal()"  readonly  [(ngModel)]="purchaseData.sub_total"/>
+                        
+                        </div>
+
+                      
+
+                        
+
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>GST(%):</label>
+                            <select   #calcgst class="form-control data-control p-2" formControlName="gst_in_percent" (change)="calculateGST()" (change)="calculateTotal()"  [(ngModel)]="purchaseData.gst_in_percent">
+
+                                <option class="select-border p-2" [selected]=true disabled hidden>Select</option>
+          
+                                <option class="select-border p-2" hidden value=0>Select</option>
+  
+                                <option  class="select-border p-2" value="0">0 %</option>
+                                <option  class="select-border p-2" value="0.05">5 %</option>
+                                <option  class="select-border p-2" value="0.12">12 %</option>
+                                <option  class="select-border p-2" value="0.18">18 %</option>
+                                <option  class="select-border p-2" value="0.28">28 %</option>
+                          
+                              </select>
+                           
+                        </div>
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>GST Calculation(₹):</label>
+                            <input type="number" step="any" class="form-control data-controlp-2" placeholder="Enter GST Calculation"  formControlName="gst_calculation" (change)="calculateTotal()" readonly [(ngModel)]="purchaseData.gst_calculation"/>
+                        
+                        </div>
+                        <!-- <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Discount(₹):</label>
+                            <input  type="number" step="any" class="form-control data-control p-2" placeholder="Enter Discount" formControlName="discount_in_rs" (input)="calculateTotal()" [(ngModel)]="purchaseData.discount_in_rs"/>
+                    
+                        </div> -->
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Grand Total(₹):</label>
+                            <input type="number" step="any" class="form-control" class="form-control data-control p-2" placeholder="Enter Grand Total"  formControlName="total" readonly [(ngModel)]="purchaseData.total"/>
+    
+                        </div>
+                        <div class="form-group  m-2" >
+                            <label for="inputEmail4" class="form-label"><sup>*</sup>Description:</label>
+                            <textarea  class="form-control p-2" placeholder="Leave a Description here" id="floatingTextarea2" style="height: 70px" formControlName="description" [(ngModel)]="purchaseData.description" ></textarea>
+    
+                        </div>
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block"(click)="perchaseOrdergenerate(purchaseForm.value)" >Submit</button>
+                            </div>
+                        </div>
+
+                       
+    
+                    
+                </div>
+                </div>
+            </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

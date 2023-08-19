@@ -1,0 +1,264 @@
+<section class="content-header">
+    <div class="header-icon"><i class="fa fa-exchange" aria-hidden="true"></i></div>
+    <div class="header-title">
+        <h1>Transfer Stock</h1>
+    </div>
+</section>
+
+
+<div class="container-fluid">
+    <div class="data-content">
+        <div class="page-background">
+            <div class="flex-box">
+
+                <div class="col-md-12 col-sm-12 col-lg-7 " [formGroup]="transferStockForm">
+                    <div class="data-form">
+                        <div class="flex-container">
+                            <div><input type="radio" id="html" checked="checked" name="fav_language" value="HTML" [checked]="assignsysttouserbtnValue" 
+                                (click)="assignsysttouserbtn()"   (change)="assignsysttouserbtnChecked()">
+                                  <label for="html" class="text-center form-heading-radio-btn" >Assign system to
+                                    user</label><br></div>
+                            <div><input type="radio" id="html" name="fav_language" value="HTML" [checked]="assignitemstosysbtnValue"
+                                    (click)="assignitemstosysbtn()" (change)="assignitemstosysbtnChecked()">
+                                  <label for="html" class="text-center form-heading-radio-btn">Assign items to
+                                    system</label><br></div>
+                            <div><input type="radio" id="html" name="fav_language" value="HTML" [checked]="assignitemstoOthersbtnValue"
+                                    (click)="assignitemstoOthersbtn()" (change)="assignitemstoOthersbtnChecked()">
+                                  <label for="html" class="text-center form-heading-radio-btn">Assign other
+                                    items</label><br></div>
+                        </div>
+
+                        <!-- The below one is for assign system to user -->
+                        <!-- OnclickassignitemstoOthersbtn =true or  getItemsradioBtn=false -->
+
+                        <div class="form-group m-2" id="systemdiv" #systemdiv *ngIf="OnclickassignitemstoOthersbtn || !getItemsradioBtn">
+                            <label for="rating" class="form-label"> <sup>*</sup>System</label>
+                            <select class="form-control data-control  p-2" #system formControlName="item_id"
+                                (change)="selectedItem(system.value)" [(ngModel)]="transferStockData.item_id">
+
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0>Select
+                                </option>
+                                <option class="select-border p-2" *ngFor="let items of systemData"
+                                    [value]='items.item_id'>{{items.item_code}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('item_id').hasError('required') && transferStockForm.get('item_id').touched">
+                                Item is required. </div>
+                        </div>
+
+
+                           <!-- The below one is for assign items to cpu -->
+                        <!-- getItemsradioBtn=true or hideItemIdandtransferTo=true  then visible-->
+
+                           <div class="form-group m-2" *ngIf="getItemsradioBtn && !disableSystem">
+                            <label for="rating" class="form-label"> <sup>*</sup>System</label>
+                            <select class="form-control data-control  p-2" #systemTr formControlName="transfer_to"
+                                (change)="selectedCPU(systemTr.value)" [(ngModel)]="transferStockData.transfer_to">
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0>Select
+                                </option>
+                                <option class="select-border p-2" *ngFor="let items of systemData"
+                                    [value]='items.item_id'>{{items.item_code}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('transfer_to').hasError('required') && transferStockForm.get('transfer_to').touched">
+                                Item is required. </div>
+                        </div>
+
+
+
+                        <!-- the below div is for assign other items -->
+                        <!-- OnclickassignitemstoOthersbtn=true  then visible-->
+
+                        <div class="form-group m-2" *ngIf="OnclickassignitemstoOthersbtn ">
+                            <label for="rating" class="form-label"> <sup>*</sup>Items</label>
+                            <select class="form-control data-control  p-2" #system formControlName="item_id"
+                                (change)="selectedItem(system.value)" [(ngModel)]="transferStockData.item_id">
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0>Select
+                                </option>
+                                <option class="select-border p-2" *ngFor="let items of itemDataOtherThanCPU"
+                                    [value]='items.item_id'>{{items.item_code}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('item_id').hasError('required') && transferStockForm.get('item_id').touched">
+                                Item is required. </div>
+                        </div>
+
+                        <!-- OnclickassignitemstoOthersbtn =false or  getItemsradioBtn=false or hideItemIdandtransferTo=true then visible-->
+
+                        <div class="form-group m-2" *ngIf="!getItemsradioBtn  && !OnclickassignitemstoOthersbtn ">
+                            <label for="rating" class="form-label"> <sup>*</sup>Assign CPU to User</label>
+                            <select class="form-control data-control   p-2" #transferto formControlName="transfer_to"
+                                (change)="selecteduser(transferto.value)" [(ngModel)]="transferStockData.transfer_to">
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0>Select
+                                </option>
+                                <option class="select-border p-2" *ngFor="let items of getuserData"
+                                    [value]='items.user_id'>{{items.user_name}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('transfer_to').hasError('required') && transferStockForm.get('transfer_to').touched">
+                                Assigning is Required. </div>
+                        </div>
+
+                        <!-- OnclickassignitemstoOthersbtn =false and  getItemsradioBtn=true or hideItemIdandtransferTo=true then visible-->
+                        <div class="form-group m-2" *ngIf="(getItemsradioBtn && !OnclickassignitemstoOthersbtn) ">
+                            <label for="rating" class="form-label"> <sup>*</sup>Assign items To CPU</label>
+                            
+                            <!-- change into item id -->
+                            <select class="form-control data-control  p-2" #transferitem formControlName="item_id"
+                                (change)="selectedItemstoCPU(transferitem.value)" [(ngModel)]="transferStockData.item_id">
+
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0 hidden>Select</option>
+                                <option class="select-border p-2 tooltip" data-toggle="tooltip" data-placement="top"
+                                    title="Tooltip  on top" *ngFor="let items of itemDataOtherThanCPU"
+                                    [value]='items.item_id'>{{items.item_code}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('item_id').hasError('required') && transferStockForm.get('item_id').touched">
+                                Assigning is Required. </div>
+                        </div>
+
+                        <!-- //The below code is for tooltip(materail ui) showing the items are assigned to whome system  -->
+
+                        <!-- <label for="rating" class="form-label m-2"> <sup>*</sup>Assign items To CPU</label>
+
+                        <div class="form-group border rounded border-dark p-2 ml-2 mr-2" *ngIf="getItemsradioBtn && !OnclickassignitemstoOthersbtn">
+                        <mat-button-toggle class="menuToggle" #toggleButton [matMenuTriggerFor]="menu">Assign items To CPU</mat-button-toggle>
+                        <mat-menu #menu="matMenu" class="custom-menu mt-2">
+                            <ng-container *ngFor="let items of itemDataOtherThanCPU" >
+                                <button mat-menu-item (mouseenter)="onMenuItemHover($event, items.item_id)" data-toggle="tooltip" data-placement="top"
+                                [title]='getTransferDataDetailotherthanCPU'>
+                                    {{items.item_code}}
+                                </button>
+                            </ng-container>
+
+                        </mat-menu> -->
+                    
+                    <!-- </div> -->
+
+
+
+                        <div class="form-group m-2">
+                            <label for="rating" class="form-label"> <sup>*</sup>Transfer To location</label>
+                            <select class="form-control data-control  p-2" #locationId formControlName="location_id"
+                                [(ngModel)]="transferStockData.location_id"
+                                (change)="selectedLocation(locationId.value)">
+                                <option class="select-border  p-2" [selected]=true disabled hidden value=0>Select
+                                </option>
+                                <option class="select-border p-2" *ngFor="let items of locationdata"
+                                    [value]='items.location_id'>{{items.location_name}}
+                                </option>
+                            </select>
+                            <div class="mandatory my-1 text-danger"
+                                *ngIf="transferStockForm.get('location_id').hasError('required') && transferStockForm.get('location_id').touched">
+                                Location is Required. </div>
+                        </div>
+
+                        <div class="data-form-btn">
+                            <div class="form-group text-center ">
+                                <button class="btn btn-data-login btn-block"  [disabled]=" this.transferStockForm.controls['item_id']?.value==0 || (this.transferStockForm.controls['transfer_to']?.value==0 && this.transferStockForm.controls['location_id']?.value==0)" (click)="transferStock()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            
+                        <!-- <div class="data-table"> -->
+                            
+                            <div class="row" *ngIf="transferTo.transfer_to !==0">
+                                <div class="col-12 col-md-8 m-auto">
+                                    <h1 class="text-center text-danger p-2 m-2">{{getTransferDataDetailotherthanCPU}}</h1>
+                                </div>
+                              </div>
+
+                              <div class="row" *ngIf="assignitemstoOthersbtnValue==true && displayItemsInstallation">
+                                <div class="col-12 col-md-8 m-auto">
+                                    <h1 class="text-center text-danger p-2 m-2">{{getTransferDataDetailotherthanCPU}}</h1>
+                                </div>
+                              </div>
+                
+
+            <div class="flex-box" *ngIf="userDetailTabledisplay  && systemDatalength!=0">
+                <div class="col-md-12 col-sm-12 col-lg-8">
+                    <div class="data-box">
+                        <div class="data-table overflow-auto">
+
+                            <table class="table table-striped table-bordered table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width:5%;">S.NO</th>
+                                        <th scope="col" style="width:25%;">System</th>
+                                        <th scope="col" style="width:15%;">User</th>
+                                        <th scope="col" style="width:35%;">Present Location</th>
+                                        <th scope="col" style="width:20%;">Transferred Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{{SystemuserDetail.item_code}}</td>
+                                        <td>{{SystemuserDetail.user_name}}</td>
+                                        <td>{{SystemuserDetail.location_name}}</td>
+                                        <td>{{SystemuserDetail.transfer_date | date: 'yyyy-MM-dd'}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="flex-box" *ngIf="systemConfigurationlength !== 0 && assignitemstosysbtnValue == true">
+                <div class="col-md-12 col-sm-12 col-lg-8">
+                    <div class="data-box box-shadowing">
+                        <div class="data-table overflow-auto">
+
+                            <table class="table table-striped table-bordered table-hover m-0 p-0">
+                                <caption class="text-dark text-center m-0 p-0" style="caption-side:top;"><h3><strong>System Configuration</strong></h3></caption>
+                                <thead>
+                                   
+                                    <tr>
+                                        <th scope="col" style="width:5%;">S.NO</th>
+                                        <th scope="col" style="width:15%;">Items</th>
+                                        <th scope="col" style="width:35%;">Transfer by</th>
+                                        <th scope="col" style="width:20%;">Transfer Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of systemConfigurationobj;let i = index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{item.item_code}}</td>
+                                        <td>{{item.transfer_user}}</td>
+                                        <td>{{item.transfer_date | date: 'yyyy-MM-dd'}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="row"  *ngIf="systemConfigurationlength === 0 && transferTo.transfer_to !==0 && assignsysttouserbtnValue == false">
+                <div class="col-12 col-md-8 m-auto">
+                    <h1 class="text-center text-danger p-2 m-2">The items are not assigned in this system yet..</h1>
+                </div>
+              </div> -->
+
+            
+        </div>
+
+
+    </div>
+</div>

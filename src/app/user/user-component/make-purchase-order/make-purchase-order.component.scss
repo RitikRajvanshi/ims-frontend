@@ -1,0 +1,14 @@
+input[type='text']:read-only {
+    color: red;
+    // background-color: 	#FBFCFB;
+    background-color: #F5FEFD;
+}
+
+input[type='date']:read-only {
+    color: red;
+    background-color: #F5FEFD;
+}
+
+input[type='number']:read-only {
+    background-color: #F5FEFD;
+}
